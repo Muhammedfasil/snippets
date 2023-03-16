@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snippets</title>
+</head>
+
+<body>
+    <!-- HTML Generated using Markdown to HTML Converter -->
+    <h1 id="snippets">Snippets</h1>
+    <p><strong>Snippets</strong> is a text saving and retrieval web app built in Django. This app is able to save short
+        text
+        snippets with a title, timestamp and created user. The snippet can also have a tag. Implemented JWT
+        authentication for getting user.</p>
+    <h2 id="prerequisite">Prerequisite</h2>
+    <p>You need to make sure the following things are set before installing the app.</p>
+    <ol>
+        <li>Python version 3.8</li>
+        <li>Virtual environment package installed</li>
+    </ol>
+    <h2 id="installation">Installation</h2>
+    <p>Follow these steps to install the app.</p>
+    <ol>
+        <li>Clone the repository</li>
+        <li>Create a virtual environment using <strong>venv</strong> or <strong>pipenv</strong></li>
+        <li>Activate the virtual environment</li>
+        <li>
+            <p>Install the dependencies</p>
+            <pre><code>pip <span class="hljs-keyword">install</span> -r requirements.txt
+        </code></pre>
+        </li>
+        <li>
+            <p>run the following command</p>
+            <pre><code>python manage<span class="hljs-selector-class">.py</span> runserver
+        </code></pre>
+        </li>
+    </ol>
+    <h2 id="authentication">Authentication</h2>
+    <p><strong>JWT</strong> authentication is implemented. Can add new users using <strong>Django Admin.</strong> Once
+        you created the user you can use the following endpoints to get the <strong><em>access token</em></strong> and
+        <strong><em>refresh token</em></strong> </p>
+    <h5 id="admin-credentials">Admin Credentials</h5>
+    <pre>
+        <code><span class="hljs-attribute">url </span>: <a href="http://localhost:8000/admin">http://localhost:8000/admin</a>
+        <span class="hljs-attribute">username </span>: admin
+        <span class="hljs-attribute">password </span>: As<span class="hljs-variable">@12345</span>
+        </code></pre>
+    <h5 id="access-token">Access Token</h5>
+    <pre><code> 
+        url = http:<span class="hljs-comment">//localhost:8000/api/token/</span>
+        <span class="hljs-keyword">data</span> = {<span class="hljs-string">"username"</span> : <span class="hljs-string">"your_username"</span>, <span class="hljs-string">"password"</span> : <span class="hljs-string">"your_password"</span>}
+        method = POST
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">data</span> = {
+            <span class="hljs-string">"refresh"</span>: <span class="hljs-string">"&lt;your refresh token&gt;"</span>,
+            <span class="hljs-string">"access"</span>: <span class="hljs-string">"&lt;your access token&gt;"</span>
+        }
+        </code></pre>
+    <h5 id="refresh-token">Refresh Token</h5>
+    <pre><code>
+        url = http:<span class="hljs-comment">//localhost:8000/api/token/refresh/</span>
+        data = <span class="hljs-comment">{"refresh" : "&lt;your refresh token&gt;"}</span>
+        <span class="hljs-function"><span class="hljs-keyword">method</span> = <span class="hljs-title">POST</span>
+        <span class="hljs-title">return</span> <span class="hljs-title">data</span> = <span class="hljs-comment">{
+            "access": "&lt;your new access token&gt;"
+        }</span></span>
+        </code></pre>
+    <h2 id="snippet-apis">Snippet APIs</h2>
+    <p>APIs are available for list all snippets, create new snippets, update snippets, get detailed information of a
+        snippet and delete a snippet. All explained below.</p>
+    <h5 id="overview-api">Overview API</h5>
+    <p>Total number of snippet and list all available snippets with a hyperlink to respective detail APIs.</p>
+    <pre><code>
+        Endpoint : http:<span class="hljs-comment">//localhost:8000/api/snippets/</span>
+        <span class="hljs-function"><span class="hljs-keyword">Method</span> :</span> GET
+        </code></pre>
+    <h5 id="create-api">Create API</h5>
+    <p>API to collect the snippet information and save the data to DB.</p>
+    <pre><code><span class="hljs-string">
+        Endpoint :</span> <span class="hljs-string">http:</span><span class="hljs-comment">//localhost:8000/api/snippets/</span>
+        <span class="hljs-string">Method :</span> POST
+        <span class="hljs-string">Data :</span> title,short_text,tag
+        Data <span class="hljs-string">Example :</span> {
+            <span class="hljs-string">"title"</span> : <span class="hljs-string">"Python"</span>,
+            <span class="hljs-string">"short_text"</span> : <span class="hljs-string">"Python has Django framework"</span>,
+            <span class="hljs-string">"tag"</span> : <span class="hljs-string">"Programming"</span>
+        }
+        </code></pre>
+    <h5 id="detail-api">Detail API</h5>
+    <p>API will display the snippet title, content, and timestamp information.</p>
+    <pre><code>
+        Endpoint : http:<span class="hljs-comment">//localhost:8000/api/snippet/&lt;snippet_id&gt;</span>
+        <span class="hljs-function"><span class="hljs-keyword">Method</span> :</span> GET
+        </code></pre>
+    <h5 id="update-api">Update API</h5>
+    <p>API to update individual items. Update API should return item detail response.</p>
+    <pre><code><span class="hljs-string">
+        Endpoint :</span> <span class="hljs-string">http:</span><span class="hljs-comment">//localhost:8000/api/snippet/&lt;snippet_id&gt;/</span>
+        <span class="hljs-string">Method :</span> PUT
+        <span class="hljs-string">Data :</span> title,short_text,tag
+        Data <span class="hljs-string">Example :</span> {
+            <span class="hljs-string">"title"</span> : <span class="hljs-string">"Python"</span>,
+            <span class="hljs-string">"short_text"</span> : <span class="hljs-string">"Python has Django framework"</span>,
+            <span class="hljs-string">"tag"</span> : <span class="hljs-string">"Programming"</span>
+        }
+        </code></pre>
+    <p><em>Note : All fields are required. Give the field which needs to be updated. Rest of the data must remain same.
+            This will be managed by front-end, like &quot;form initial&quot;. For Postman we need to type the data.</em>
+    </p>
+    <h5 id="delete-api">Delete API</h5>
+    <p>API to delete selected items and return the list of items as response. This endpoint will take a list of snippet
+        ids and deletes them and returns the rest of the snippets as a list. User confirmation should be implemented in
+        the front-end.</p>
+    <pre><code>
+        Endpoint : http:<span class="hljs-comment">//localhost:8000/api/snippets/</span>
+        <span class="hljs-function"><span class="hljs-keyword">Method</span> :</span> DELETE
+        Data : <span class="hljs-comment">{
+            "snippet_ids" : &lt;list of snippet ids to delete&gt;
+        }</span>
+        Data Example : <span class="hljs-comment">{
+            "snippet_ids" : [1,2,3]
+        }</span>
+        </code></pre>
+    <h2 id="tag-apis">Tag APIs</h2>
+    <p>APIs are available for list tags,snippets linked to the selected tag.</p>
+    <h5 id="tag-list-api">Tag List API</h5>
+    <p>API to list tags. It will return the tag id and tag title.</p>
+    <pre><code>
+        Endpoint : http:<span class="hljs-comment">//localhost:8000/api/tags/</span>
+        <span class="hljs-function"><span class="hljs-keyword">Method</span> :</span> GET
+        </code></pre>
+    <h5 id="tag-detail-api">Tag Detail API</h5>
+    <p>API to return snippets linked to the selected tag.</p>
+    <pre><code>
+        Endpoint : http:<span class="hljs-comment">//localhost:8000/api/tags/&lt;tag id&gt;</span>
+        <span class="hljs-function"><span class="hljs-keyword">Method</span> :</span> GET
+        </code></pre>
+    <h2 id="technical-specifications">Technical Specifications</h2>
+    <pre><code>Django version : 4.1.7
+        Python Version : 3.8
+        Database used  : <span class="hljs-type">Sqlite3</span>
+        </code></pre>
+</body>
+
+</html>

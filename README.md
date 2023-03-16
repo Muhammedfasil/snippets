@@ -31,7 +31,8 @@ Follow these steps to install the app.
 
 ##### Admin Credentials
 
-	username : admin
+	url      : http://localhost:8000/admin
+    username : admin
 	password : As@12345
 		
 ##### Access Token

@@ -1,6 +1,9 @@
+from dataclasses import fields
+from pickletools import read_long1
 from django.utils.encoding import smart_str
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
+from rest_framework.reverse import reverse
 
 from ad_snippets.models import Snippet,Tag
 
@@ -21,9 +24,19 @@ class SnippetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Snippet
-        fields = ['title','short_text','created_at','updated_at','created_by','tag','hyperlink']
+        fields = ['id','title','short_text','created_at','updated_at','created_by','tag','hyperlink']
 
     def get_hyperlink(self,obj):
-        # Generating hyper link here
-        return '1'
+        return reverse('snippet_details',kwargs={'pk':obj.id},request=self.context['request'])
  
+class TagListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ['id','title']
+
+class TagDetailSerializer(serializers.ModelSerializer):
+    snippets = SnippetSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Tag
+        fields = ['id','title','snippets']

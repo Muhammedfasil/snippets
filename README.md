@@ -17,7 +17,11 @@ Follow these steps to install the app.
  1. Clone the repository
  2. Create a virtual environment using **venv** or **pipenv**
  3. Activate the virtual environment
- 4. run the following command
+ 4. Install the dependencies
+
+	    pip install -r requirements.txt
+
+ 6. run the following command
 
 		python manage.py runserver
 
